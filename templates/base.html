@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/nav.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
@@ -8,6 +10,12 @@
 <body>
 
     <h1>Todo App</h1>
+
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <a class="navbar-brand" href="/">All Tasks</a>
+        <a class="navbar-brand" href="/active">Active Tasks</a>
+        <a class="navbar-brand" href="/complete">Completed Tasks</a>
+    </nav>
 
     <form action="/add" method="post">
         <div>
