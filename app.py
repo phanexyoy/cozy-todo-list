@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_user, current_user, UserMixin, login_required
+from flask_login import LoginManager, login_user, logout_user, current_user, UserMixin, login_required
 import os
 from dotenv import load_dotenv
 
@@ -45,7 +45,7 @@ def home():
     else:
         todo_list = Todo.query.filter_by(account_id=current_user.id).all()
 
-    return render_template('base.html', todo_list=todo_list, filter_val=filter_val)
+    return render_template('base.html', todo_list=todo_list, filter_val=filter_val, username=current_user.username)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -82,6 +82,12 @@ def register():
             login_user(user)
             return redirect(url_for("home"))
     return render_template('register.html', error=False)
+
+@login_required
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
 
 @login_required
 @app.route('/add', methods=["POST"])
