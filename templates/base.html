@@ -9,11 +9,25 @@
 </head>
 <body>
 
-    <h1 class="text-center">Todo App</h1>
+    <div class="container" style="justify-content: center; align-items: center; margin: 0 auto; height: 145px; overflow-y: auto; display: flex;">
+        <h1 class="text-center" style="position: relative; right:-40px">Camping Checklist</h1>
+
+        <div class="dropdown" style="position: relative; right: -100px">
+            <button class="btn btn-link dropdown-toggle" type="button" id="accountDropdown" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                {{ username }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                <li>
+                    <a class="dropdown-item account-view" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Navigation Radio -->
     <div class="d-flex justify-content-center">
-        <form action="/" method="get" id="filterForm">
+        <form action="/home" method="get" id="filterForm">
             <div class="btn-group" role="group" aria-label="Task Filters">
                 <input type="radio" class="btn-check" name="filter" id="all" value="all" autocomplete="off" 
                     {% if filter_val == 'all' %}checked{% endif %}>
@@ -85,7 +99,12 @@
 
 
     <!-- Todo List -->
-    <div class="container" style="max-width: 600px; margin: 0 auto; max-height: 80vh; overflow-y: auto;">
+    <div class="container" style="max-width: 600px; margin: 0 auto; max-height: 140vh; overflow-y: auto; height: 60vh;">
+        {% if todo_list|length == 0 %}
+            <div class="alert alert-info text-center" role="alert">
+                No tasks available. Add a task to get started!
+            </div>
+        {% endif %}
         {% for todo in todo_list %}
         <div class="d-flex align-items-center justify-content-between w-101 mb-2">
             <!-- Checkbox -->
