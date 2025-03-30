@@ -18,31 +18,32 @@
         </div>
     </div>
 
-    <!--login-->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModelLabel" aria-hidden="true">
+    <!--register-->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModelLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/login" method="post" id="loginForm">
+            <form action="/register" method="post" id="registerForm">
             <div class="modal-header" style="border-bottom: none;">
-                <h5 class="modal-title" id="loginModelLabel">Camper Check-In</h5>
+                <h5 class="modal-title" id="registerModelLabel">Camper Sign-Up</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
                 <input type="text" class="form-control" name="username" placeholder="Username" maxlength="100" required>
-                <input type="password" class="form-control" name="password" placeholder="Password" maxlength="100" required>
+                <input type="password" class="form-control" name="password" placeholder="Password" maxlength="100" minlength="8" required>
+                <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" maxlength="100" minlength="8" required>
                 </div>
             </div>
-            <div class="modal-body", id="loginError">
+            <div class="modal-body", id="registerError">
                 {% if error %}
                 <div class="alert alert-danger" role="alert">
-                    Invalid credentials. Please try again camper!
+                    {{ error }}
                 </div>
                 {% endif %}
             </div>
             <div class="modal-footer justify-content-center" style="border-top: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Register</button>
             </div>
             </form>
         </div>
@@ -52,16 +53,16 @@
     <!--login func-->
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            //if there's an error present, show the modal immediately
+            //if there's an error present, show the modal immediately again
             if("{{error}}") {
-                var addModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                var addModal = new bootstrap.Modal(document.getElementById('registerModal'));
                 addModal.show();
             }
             //setup listener though otherwise
-            var loginButton = document.getElementById('loginButton');
+            var loginButton = document.getElementById('registerButton');
             loginButton.addEventListener('click', function(e){
                 e.preventDefault();
-                var addModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                var addModal = new bootstrap.Modal(document.getElementById('registerModal'));
                 addModal.show();
             });
         });
