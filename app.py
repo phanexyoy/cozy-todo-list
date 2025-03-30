@@ -11,20 +11,7 @@ class Todo(db.Model):
     title = db.Column(db.String(100))
     complete = db.Column(db.Boolean)
 
-# @app.route('/')
-# def index():
-#     todo_list = Todo.query.all()
-#     return render_template('base.html', todo_list=todo_list)
 
-# @app.route('/active')
-# def active():
-#     todo_list = Todo.query.filter_by(complete=False).all()
-#     return render_template('base.html', todo_list=todo_list)
-
-# @app.route('/complete')
-# def complete():
-#     todo_list = Todo.query.filter_by(complete=True).all()
-#     return render_template('base.html', todo_list=todo_list)
 
 @app.route('/')
 def index():
@@ -37,6 +24,8 @@ def index():
         todo_list = Todo.query.all()
 
     return render_template('base.html', todo_list=todo_list, filter_val=filter_val)
+
+
 
 @app.route('/add', methods=["POST"])
 def add():
