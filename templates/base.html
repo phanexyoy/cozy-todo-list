@@ -9,13 +9,25 @@
 </head>
 <body>
 
-    <h1>Todo App</h1>
+    <h1 class="text-center">Todo App</h1>
 
-    <nav class="navbar navbar-expand-lg bg-primary">
-        <a class="navbar-brand" href="/">All Tasks</a>
-        <a class="navbar-brand" href="/active">Active Tasks</a>
-        <a class="navbar-brand" href="/complete">Completed Tasks</a>
-    </nav>
+    <div class="d-flex justify-content-center">
+        <form action="/" method="get" id="filterForm">
+            <div class="btn-group" role="group" aria-label="Task Filters">
+                <input type="radio" class="btn-check" name="filter" id="all" value="all" autocomplete="off" 
+                    {% if filter_val == 'all' %}checked=""{% endif %}>
+                <label class="btn btn-outline-primary" for="all">All Tasks</label>
+            
+                <input type="radio" class="btn-check" name="filter" id="active" value="active" autocomplete="off" 
+                    {% if filter_val == 'active' %}checked=""{% endif %}>
+                <label class="btn btn-outline-primary" for="active">Active Tasks</label>
+            
+                <input type="radio" class="btn-check" name="filter" id="complete" value="complete" autocomplete="off" 
+                    {% if filter_val == 'complete' %}checked=""{% endif %}>
+                <label class="btn btn-outline-primary" for="complete">Completed Tasks</label>
+            </div>
+        </form>
+    </div>
 
     <form action="/add" method="post">
         <div>
@@ -40,5 +52,13 @@
         <a href="/delete/{{ todo.id }}">Delete</a>
     {% endfor %}
     
+    <script>
+        document.querySelectorAll('input[name="filter"]').forEach((radio) => {
+          radio.addEventListener('change', () => {
+            document.getElementById('filterForm').submit();
+          });
+        });
+    </script>
+  
 </body>
 </html>
