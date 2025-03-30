@@ -23,6 +23,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     complete = db.Column(db.Boolean)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -30,26 +31,19 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    filter_val = request.args.get('filter', 'all')
-    if filter_val == 'active':
-        todo_list = Todo.query.filter_by(complete=False).all()
-    elif filter_val == 'complete':
-        todo_list = Todo.query.filter_by(complete=True).all()
-    else:
-        todo_list = Todo.query.all()
-
-    return render_template('login.html', todo_list=todo_list, filter_val=filter_val)
+    # lol
+    return render_template('login.html')
 
 @login_required
 @app.route('/home')
 def home():
     filter_val = request.args.get('filter', 'all')
     if filter_val == 'active':
-        todo_list = Todo.query.filter_by(complete=False).all()
+        todo_list = Todo.query.filter_by(complete=False, account_id=current_user.id).all()
     elif filter_val == 'complete':
-        todo_list = Todo.query.filter_by(complete=True).all()
+        todo_list = Todo.query.filter_by(complete=True, account_id=current_user.id).all()
     else:
-        todo_list = Todo.query.all()
+        todo_list = Todo.query.filter_by(account_id=current_user.id).all()
 
     return render_template('base.html', todo_list=todo_list, filter_val=filter_val)
 
@@ -94,7 +88,7 @@ def register():
 def add():
     title = request.form.get("title")
     filter_val = request.args.get("filter", "all")
-    new_todo = Todo(title=title, complete=False)
+    new_todo = Todo(title=title, complete=False, account_id=current_user.id)
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("home", filter=filter_val))
