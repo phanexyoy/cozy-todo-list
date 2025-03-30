@@ -22,3 +22,22 @@ li {
     background: url('/static/images/fire1.png') no-repeat left center;
     background-size: 28px 28px;
 }
+
+.dropdown-toggle.btn-link {
+    text-decoration: none;
+}
+  
+.dropdown-toggle.btn-link::after {
+    display: none;
+}
+
+.btn-link.dropdown-toggle:hover {
+    background-color: #f0f0f0; 
+}
+
+.modal-header {
+    border-bottom: none;
+}
+.modal-footer {
+    border-top: none;
+}

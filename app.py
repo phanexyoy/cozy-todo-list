@@ -36,6 +36,16 @@ def add():
     db.session.commit()
     return redirect(url_for("index", filter=filter_val))
 
+@app.route('/edit', methods=["POST"])
+def edit():
+    todo_id = request.form.get("todo_id")
+    new_title = request.form.get("title")
+    filter_val = request.form.get("filter", "all")
+    todo = Todo.query.get(todo_id)
+    todo.title = new_title
+    db.session.commit()
+    return redirect(url_for("index", filter=filter_val))
+
 @app.route('/update/<int:todo_id>')
 def update(todo_id):
     filter_val = request.args.get("filter", "all")
