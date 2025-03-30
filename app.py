@@ -16,6 +16,15 @@ def index():
     todo_list = Todo.query.all()
     return render_template('base.html', todo_list=todo_list)
 
+@app.route('/active')
+def active():
+    todo_list = Todo.query.filter_by(complete=False).all()
+    return render_template('base.html', todo_list=todo_list)
+
+@app.route('/complete')
+def complete():
+    todo_list = Todo.query.filter_by(complete=True).all()
+    return render_template('base.html', todo_list=todo_list)
 
 
 @app.route('/add', methods=["POST"])
