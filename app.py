@@ -30,24 +30,27 @@ def index():
 @app.route('/add', methods=["POST"])
 def add():
     title = request.form.get("title")
+    filter_val = request.args.get("filter", "all")
     new_todo = Todo(title=title, complete=False)
     db.session.add(new_todo)
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("index", filter=filter_val))
 
 @app.route('/update/<int:todo_id>')
 def update(todo_id):
-    todo = Todo.query.filter_by(id=todo_id).first()
+    filter_val = request.args.get("filter", "all")
+    todo = Todo.query.get(todo_id)
     todo.complete = not todo.complete
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("index", filter=filter_val))
 
 @app.route('/delete/<int:todo_id>')
 def delete(todo_id):
-    todo = Todo.query.filter_by(id=todo_id).first()
+    filter_val = request.args.get("filter", "all")
+    todo = Todo.query.get(todo_id)
     db.session.delete(todo)
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("index", filter=filter_val))
 
 
 

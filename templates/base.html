@@ -29,7 +29,7 @@
         </form>
     </div>
 
-    <form action="/add" method="post">
+    <form action="/add?filter={{ filter_val }}" method="post">
         <div>
             <label for="title">Todo Title</label>
             <input type="text" name="title" placeholder="Enter Todo...">
@@ -42,11 +42,11 @@
         <div class="form-check">
             <input class="form-check-input custom-checkbox" type="checkbox" id="todo{{ todo.id }}" 
                 {% if todo.complete %}checked{% endif %}
-                onchange="window.location.href='/update/{{ todo.id }}'">
+                onchange="window.location.href='/update/{{ todo.id }}?filter={{ filter_val }}'">
             <label class="form-check-label {% if todo.complete %}completed{% endif %}" for="todo{{ todo.id }}">
                 {{ todo.title }}
             </label>
-            <a href="/delete/{{ todo.id }}">Delete</a>
+            <a href="/delete/{{ todo.id }}?filter={{ filter_val }}">Delete</a>
         </div>        
     {% endfor %}
             
